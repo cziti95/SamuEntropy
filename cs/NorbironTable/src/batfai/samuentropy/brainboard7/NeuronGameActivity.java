@@ -38,17 +38,29 @@
  * 0.0.1, 2013.szept.29.
  */
 package batfai.samuentropy.brainboard7;
-
+import android.preference.PreferenceManager;
 /**
  *
  * @author nbatfai
  */
 public class NeuronGameActivity extends android.app.Activity {
 
+	public static final String PREFERENCES = "SaveGame";
+
     @Override
     public void onCreate(android.os.Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-                
+        android.content.SharedPreferences setting = PreferenceManager.getDefaultSharedPreferences(this);
+        setContentView(R.layout.main);         
     }
+    
+    @Override
+    protected void onPause()
+    {
+		super.onPause();
+		
+		android.content.SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+		android.content.SharedPreferences.Editor editor = settings.edit();
+		NorbironSurfaceView.saveData(editor);
+		}
 }
